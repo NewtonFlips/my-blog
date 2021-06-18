@@ -1,9 +1,7 @@
-import ReactMarkdown from "react-markdown";
 import classes from "./FeaturedBlogs.module.css";
 import Link from "next/link";
 
 const FeaturedBlogs = (props) => {
-  props.data.forEach((blog) => console.log(blog.slug));
   return (
     <>
       <h2 className={classes.featuredHeading}>Top picks for today!</h2>
