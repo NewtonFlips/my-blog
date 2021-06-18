@@ -1,16 +1,18 @@
+import ReactMarkdown from "react-markdown";
 import classes from "./FeaturedBlogs.module.css";
 import Link from "next/link";
 
 const FeaturedBlogs = (props) => {
+  props.data.forEach((blog) => console.log(blog.slug));
   return (
     <>
       <h2 className={classes.featuredHeading}>Top picks for today!</h2>
       <ul className={classes.featured}>
         {props.data.map((blog) => (
-          <Link key={blog.id} href={`/blogs/${blog.id}`}>
+          <Link key={blog.slug} href={`/blogs/${blog.slug}`}>
             <li>
               <h3>{blog.title}</h3>
-              <p>{blog.shortDescription}</p>
+              <p>{blog.excerpt}</p>
             </li>
           </Link>
         ))}

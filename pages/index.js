@@ -1,31 +1,22 @@
-import fs from "fs/promises";
-import path from "path";
-import Head from "next/head";
-import Layout from "../components/ui/Layout";
-import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer";
 import FeaturedBlogs from "../components/blogs/FeaturedBlogs";
+import { getFeaturedPosts } from "../utils/loadData";
 
 export default function Home(props) {
   return (
     <>
       {/* <Header />
       <Layout> */}
-      <FeaturedBlogs data={props.data} />
+      <FeaturedBlogs data={props.posts} />
       {/* </Layout>
       <Footer /> */}
     </>
   );
 }
 
-export async function getStaticProps() {
-  const rawData = await fs.readFile(
-    path.join(process.cwd(), "DUMMY_BACKEND.json"),
-    "utf-8"
-  );
-  const data = JSON.parse(rawData);
+export function getStaticProps() {
+  const data = getFeaturedPosts();
+  console.log(data);
   return {
-    props: { data },
-    revalidate: 600,
+    props: { posts: data },
   };
 }

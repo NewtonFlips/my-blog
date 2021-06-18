@@ -24,3 +24,12 @@ h2,
 h3 {
   font-weight: 600;
 }
+
+h2 {
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+}
+
+li {
+  margin-left: 3rem;
+}

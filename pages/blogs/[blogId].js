@@ -1,9 +1,5 @@
-import fs from "fs/promises";
-import path from "path";
-import Header from "../../components/header/Header";
-import Layout from "../../components/ui/Layout";
 import SingleBlog from "../../components/blogs/SingleBlog";
-import Footer from "../../components/footer/Footer";
+import { getPostData, getPostFiles } from "../../utils/loadData";
 
 const Blog = (props) => {
   if (!props.data) {
@@ -19,43 +15,38 @@ const Blog = (props) => {
 
 export default Blog;
 
-export async function getStaticProps(context) {
+export function getStaticProps(context) {
   const { params } = context;
-  const rawData = await fs.readFile(
-    path.join(process.cwd(), "DUMMY_BACKEND.json"),
-    "utf-8"
-  );
-  const blogs = JSON.parse(rawData);
+  const { blogId } = params;
 
-  const singleBlog = blogs.find((blog) => blog.id === params.blogId);
+  const singleBlog = getPostData(blogId);
+
+  // const singleBlog = blogs.find((blog) => blog.id === params.blogId);
 
   // This is also usefule and was added later on
-  if (!singleBlog) {
-    return {
-      notFound: true,
-    };
-  }
+  // if (!singleBlog) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 
   return {
     props: {
       data: singleBlog,
     },
+    revalidate: 600,
   };
 }
 
-export async function getStaticPaths(context) {
-  const rawData = await fs.readFile(
-    path.join(process.cwd(), "DUMMY_BACKEND.json"),
-    "utf-8"
-  );
-  const data = JSON.parse(rawData);
+export function getStaticPaths(context) {
+  const data = getPostFiles();
 
   const blogObjects = data.map((blog) => {
-    return { params: { blogId: blog.id } };
+    return blog.replace(/\.md$/, "");
   });
 
   return {
-    paths: blogObjects,
-    fallback: true, // if it is set to true, this would mean that for pages which are not listed but could be found should be rendered on the fly,
+    paths: blogObjects.map((slug) => ({ params: { blogId: slug } })),
+    fallback: false, // if it is set to true, this would mean that for pages which are not listed but could be found should be rendered on the fly,
   };
 }

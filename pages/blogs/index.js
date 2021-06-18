@@ -1,9 +1,5 @@
-import fs from "fs/promises";
-import path from "path";
-import Header from "./../../components/header/Header";
-import Layout from "../../components/ui/Layout";
-import Footer from "../../components/footer/Footer";
 import AllBlogs from "../../components/blogs/AllBlogs";
+import { getAllPosts } from "../../utils/loadData";
 
 const Blogs = (props) => {
   return (
@@ -15,14 +11,9 @@ const Blogs = (props) => {
 
 export default Blogs;
 
-export async function getStaticProps() {
-  const rawData = await fs.readFile(
-    path.join(process.cwd(), "DUMMY_BACKEND.json"),
-    "utf-8"
-  );
-  const data = JSON.parse(rawData);
+export function getStaticProps() {
+  const data = getAllPosts();
   return {
     props: { data },
-    revalidate: 600,
   };
 }

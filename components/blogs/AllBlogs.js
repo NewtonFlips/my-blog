@@ -7,10 +7,10 @@ const AllBlogs = (props) => {
       <h2 className={classes.featuredHeading}>All Blogs!</h2>
       <ul className={classes.featured}>
         {props.data.map((blog) => (
-          <Link key={blog.id} href={`/blogs/${blog.id}`}>
-            <li key={blog.id}>
+          <Link key={blog.slug} href={`/blogs/${blog.slug}`}>
+            <li>
               <h3>{blog.title}</h3>
-              <p>{blog.shortDescription}</p>
+              <p>{blog.excerpt}</p>
             </li>
           </Link>
         ))}
