@@ -9,18 +9,11 @@ import FeaturedBlogs from "../components/blogs/FeaturedBlogs";
 export default function Home(props) {
   return (
     <>
-      <Head>
-        <title>My Blog</title>
-        <meta
-          name="description"
-          content="My blog is a place where you can find high quality content on fields of security, technology, web development, finance, accounting, audit and many other topics around you."
-        />
-      </Head>
-      <Header />
-      <Layout>
-        <FeaturedBlogs data={props.data} />
-      </Layout>
-      <Footer />
+      {/* <Header />
+      <Layout> */}
+      <FeaturedBlogs data={props.data} />
+      {/* </Layout>
+      <Footer /> */}
     </>
   );
 }
@@ -33,5 +26,6 @@ export async function getStaticProps() {
   const data = JSON.parse(rawData);
   return {
     props: { data },
+    revalidate: 600,
   };
 }

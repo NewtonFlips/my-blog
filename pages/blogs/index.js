@@ -8,11 +8,7 @@ import AllBlogs from "../../components/blogs/AllBlogs";
 const Blogs = (props) => {
   return (
     <>
-      <Header />
-      <Layout>
-        <AllBlogs data={props.data} />
-      </Layout>
-      <Footer />
+      <AllBlogs data={props.data} />
     </>
   );
 };
@@ -27,5 +23,6 @@ export async function getStaticProps() {
   const data = JSON.parse(rawData);
   return {
     props: { data },
+    revalidate: 600,
   };
 }

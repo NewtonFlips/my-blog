@@ -6,13 +6,13 @@ import SingleBlog from "../../components/blogs/SingleBlog";
 import Footer from "../../components/footer/Footer";
 
 const Blog = (props) => {
+  if (!props.data) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
-      <Header />
-      <Layout>
-        <SingleBlog data={props.data} />
-      </Layout>
-      <Footer />
+      <SingleBlog data={props.data} />
     </>
   );
 };
@@ -28,6 +28,13 @@ export async function getStaticProps(context) {
   const blogs = JSON.parse(rawData);
 
   const singleBlog = blogs.find((blog) => blog.id === params.blogId);
+
+  // This is also usefule and was added later on
+  if (!singleBlog) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
@@ -49,6 +56,6 @@ export async function getStaticPaths(context) {
 
   return {
     paths: blogObjects,
-    fallback: false,
+    fallback: true, // if it is set to true, this would mean that for pages which are not listed but could be found should be rendered on the fly,
   };
 }

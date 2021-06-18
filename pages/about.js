@@ -6,11 +6,7 @@ import AboutContent from "../components/about/AboutContent";
 const About = () => {
   return (
     <>
-      <Header />
-      <Layout>
-        <AboutContent />
-      </Layout>
-      <Footer />
+      <AboutContent />
     </>
   );
 };
